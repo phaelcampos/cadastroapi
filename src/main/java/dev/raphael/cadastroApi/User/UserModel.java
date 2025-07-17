@@ -1,10 +1,11 @@
-package dev.raphael.cadastroApi;
+package dev.raphael.cadastroApi.User;
 
+import dev.raphael.cadastroApi.Tasks.TasksModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_cadastro")
-public class CadastroModel {
+@Table(name = "tb_user")
+public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +14,16 @@ public class CadastroModel {
     String email;
     int age;
 
-    public CadastroModel() {
+    //ManyToOne= um User só pode ter uma missão
+    @ManyToOne()
+    @JoinColumn(name = "task_id") //FK
+    private TasksModel tasks;
+
+    public UserModel() {
 
     }
 
-    public CadastroModel(String name, String email, int age) {
+    public UserModel(String name, String email, int age) {
         this.name = name;
         this.email = email;
         this.age = age;
