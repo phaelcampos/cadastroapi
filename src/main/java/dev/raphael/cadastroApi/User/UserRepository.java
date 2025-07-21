@@ -1,4 +1,6 @@
 package dev.raphael.cadastroApi.User;
 
-public class UserRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<UserModel, Long> {
 }

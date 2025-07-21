@@ -2,11 +2,15 @@ package dev.raphael.cadastroApi.Tasks;
 
 import dev.raphael.cadastroApi.User.UserModel;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "tb_tasks")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class TasksModel {
 
     @Id

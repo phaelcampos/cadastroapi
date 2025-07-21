@@ -1,4 +1,6 @@
 package dev.raphael.cadastroApi.Tasks;
 
-public class TaskRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TaskRepository  extends JpaRepository<TasksModel, Long> {
 }
