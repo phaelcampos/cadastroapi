@@ -1,8 +1,6 @@
 package dev.raphael.cadastroApi.User;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
@@ -13,4 +11,28 @@ public class UserController {
         return "hello world";
     }
 
+    @PostMapping("/add")
+    public String addUser(){
+        return "add user";
+    }
+
+    @GetMapping("/all")
+    public String getUser(){
+        return "Get User";
+    }
+
+    @GetMapping("/id")
+    public String getUserById(){
+        return "Get user by id";
+    }
+
+    @PutMapping("/editID")
+    public String editUser(){
+        return "Edit user";
+    }
+
+    @DeleteMapping("/DeleteId")
+    public String deleteUser(){
+        return "Delete user";
+    }
 }
