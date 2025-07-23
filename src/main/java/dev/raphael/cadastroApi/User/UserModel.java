@@ -23,5 +23,5 @@ public class UserModel {
     @ManyToOne()
     @JoinColumn(name = "task_id") //FK
     private TasksModel tasks;
-
+    String rank;
 }
