@@ -3,7 +3,7 @@ package dev.raphael.cadastroApi.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("User")
 public class UserController {
 
     @GetMapping("/helloWorld")
