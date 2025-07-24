@@ -1,10 +1,8 @@
 package dev.raphael.cadastroApi.User;
 
-import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
