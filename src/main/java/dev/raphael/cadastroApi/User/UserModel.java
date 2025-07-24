@@ -16,13 +16,19 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long Id;
+
     String name;
+
     @Column(unique = true)
     String email;
+
     int age;
+
     private String imgUrl;
     //ManyToOne= um User só pode ter uma missão
     @ManyToOne()
     @JoinColumn(name = "task_id") //FK
     private TasksModel tasks;
+
+    private String rank;
 }

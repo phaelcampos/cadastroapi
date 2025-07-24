@@ -21,8 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public UserModel addUser(@RequestBody UserModel user){
-        System.out.println(user.toString());
+    public UserDTO addUser(@RequestBody UserDTO user){
         return userService.addUser(user);
     }
 

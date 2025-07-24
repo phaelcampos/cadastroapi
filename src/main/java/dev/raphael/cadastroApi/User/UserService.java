@@ -9,9 +9,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     public List<UserModel> listUsers(){
@@ -23,8 +25,10 @@ public class UserService {
         return user.orElse(null);
     }
 
-    public UserModel addUser(UserModel user){
-        return userRepository.save(user);
+    public UserDTO addUser(UserDTO userDTO){
+        UserModel userModel = userMapper.map(userDTO);
+        userModel = userRepository.save(userModel);
+        return userMapper.map(userModel);
     }
 
     public void deleteById(Long id){
