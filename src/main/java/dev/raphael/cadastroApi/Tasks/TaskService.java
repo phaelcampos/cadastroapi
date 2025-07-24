@@ -9,13 +9,17 @@ import java.util.Optional;
 public class TaskService {
 
     public TaskRepository taskRepository;
+    public TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository){
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
     }
 
-    public TasksModel save(TasksModel tasksModel){
-       return taskRepository.save(tasksModel);
+    public TaskDTO save(TaskDTO taskDTO){
+        TasksModel tasksModel = taskMapper.map(taskDTO);
+        tasksModel = taskRepository.save(tasksModel);
+        return taskMapper.map(tasksModel);
     }
 
     public List<TasksModel> findAll(){
