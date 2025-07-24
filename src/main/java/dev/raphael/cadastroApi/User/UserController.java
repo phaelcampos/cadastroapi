@@ -1,8 +1,10 @@
 package dev.raphael.cadastroApi.User;
 
+import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -34,9 +36,9 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PutMapping("/{id}")
-    public String editUser(@PathVariable Long id){
-        return "Edit user";
+    @PatchMapping("/{id}")
+    public UserModel editUser(@PathVariable Long id, @RequestBody UserModel user){
+        return userService.updateUser(user, id);
     }
 
     @DeleteMapping("/{id}")

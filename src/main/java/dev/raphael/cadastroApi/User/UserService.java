@@ -1,5 +1,6 @@
 package dev.raphael.cadastroApi.User;
 
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +29,13 @@ public class UserService {
 
     public void deleteById(Long id){
         userRepository.deleteById(id);
+    }
+    public UserModel updateUser(UserModel updatedUser, Long id){;
+        if(userRepository.existsById(id)){
+            //coloca o id para ser atualizado, e salva nesse id o as atts
+            updatedUser.setId(id);
+            return userRepository.save(updatedUser);
+        }
+        return null;
     }
 }
