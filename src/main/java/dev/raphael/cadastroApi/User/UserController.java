@@ -26,17 +26,17 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<UserModel> getUser(){
+    public List<UserDTO> getUser(){
         return userService.listUsers();
     }
 
     @GetMapping("/{id}")
-    public UserModel getUserById(@PathVariable Long id){
+    public UserDTO getUserById(@PathVariable Long id){
         return userService.findById(id);
     }
 
     @PatchMapping("/{id}")
-    public UserModel editUser(@PathVariable Long id, @RequestBody UserModel user){
+    public UserDTO editUser(@PathVariable Long id, @RequestBody UserDTO user){
         return userService.updateUser(user, id);
     }
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -16,13 +17,16 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public List<UserModel> listUsers(){
-        return userRepository.findAll();
+    public List<UserDTO> listUsers(){
+        List<UserModel> users = userRepository.findAll();
+        return users.stream()
+                .map(userMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public UserModel findById(Long id){
+    public UserDTO findById(Long id){
         Optional<UserModel> user = userRepository.findById(id);
-        return user.orElse(null);
+        return user.map(userMapper::map).orElse(null);
     }
 
     public UserDTO addUser(UserDTO userDTO){
@@ -34,11 +38,13 @@ public class UserService {
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }
-    public UserModel updateUser(UserModel updatedUser, Long id){;
-        if(userRepository.existsById(id)){
-            //coloca o id para ser atualizado, e salva nesse id o as atts
+    public UserDTO updateUser(UserDTO userDTO, Long id){
+        Optional<UserModel> existingUser = userRepository.findById(id);
+        if(existingUser.isPresent()){
+            UserModel updatedUser = userMapper.map(userDTO);
             updatedUser.setId(id);
-            return userRepository.save(updatedUser);
+            UserModel savedUser = userRepository.save(updatedUser);
+            return userMapper.map(savedUser);
         }
         return null;
     }
