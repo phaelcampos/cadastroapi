@@ -1,38 +1,48 @@
 package dev.raphael.cadastroApi.User;
 
+import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("User")
+@RequestMapping("/user")
 public class UserController {
+    private UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping("/helloWorld")
     public String getMapping(){
         return "hello world";
     }
 
-    @PostMapping("/add")
-    public String addUser(){
-        return "add user";
+    @PostMapping("/")
+    public UserModel addUser(@RequestBody UserModel user){
+        System.out.println(user.toString());
+        return userService.addUser(user);
     }
 
-    @GetMapping("/all")
-    public String getUser(){
-        return "Get User";
+    @GetMapping("/")
+    public List<UserModel> getUser(){
+        return userService.listUsers();
     }
 
-    @GetMapping("/id")
-    public String getUserById(){
-        return "Get user by id";
+    @GetMapping("/{id}")
+    public UserModel getUserById(@PathVariable Long id){
+        return userService.findById(id);
     }
 
-    @PutMapping("/editID")
-    public String editUser(){
+    @PutMapping("/{id}")
+    public String editUser(@PathVariable Long id){
         return "Edit user";
     }
 
-    @DeleteMapping("/DeleteId")
-    public String deleteUser(){
-        return "Delete user";
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteById(id);
     }
 }

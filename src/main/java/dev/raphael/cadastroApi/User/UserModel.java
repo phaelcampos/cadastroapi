@@ -3,12 +3,14 @@ package dev.raphael.cadastroApi.User;
 import dev.raphael.cadastroApi.Tasks.TasksModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_user")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class UserModel {
 
     @Id
@@ -23,5 +25,4 @@ public class UserModel {
     @ManyToOne()
     @JoinColumn(name = "task_id") //FK
     private TasksModel tasks;
-    String rank;
 }
