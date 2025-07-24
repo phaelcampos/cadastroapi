@@ -23,7 +23,7 @@ public class TaskController {
         return taskService.findById(id);
     }
     @PostMapping
-    public TasksModel save(@RequestBody TasksModel tasksModel){
+    public TaskDTO save(@RequestBody TaskDTO tasksModel){
         return taskService.save(tasksModel);
     }
 
