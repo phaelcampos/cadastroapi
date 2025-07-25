@@ -1,5 +1,7 @@
 package dev.raphael.cadastroApi.Tasks;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,31 +11,45 @@ import java.util.List;
 public class TaskController {
 
     public TaskService taskService;
+
     public TaskController(TaskService taskService){
         this.taskService = taskService;
     }
 
     @GetMapping("/")
-    public List<TasksModel> list(){
-        return taskService.findAll();
+    public ResponseEntity<List<TaskDTO>> list(){
+        List<TaskDTO> tasks = taskService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
 
     @GetMapping("/{id}")
-    public TasksModel list(@PathVariable Long id){
-        return taskService.findById(id);
+    public ResponseEntity<TaskDTO> list(@PathVariable Long id){
+        if(taskService.findById(id) != null){
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.findById(id));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     @PostMapping
-    public TaskDTO save(@RequestBody TaskDTO tasksModel){
-        return taskService.save(tasksModel);
+    public ResponseEntity<String> save(@RequestBody TaskDTO taskDTO){
+        TaskDTO newUser = taskService.save(taskDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("User successfully created: " + newUser.getName() + " (ID): " + newUser.getId());
     }
 
-    @PutMapping
-    public String update(){
-        return "Lista de tasks";
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> editUser(@PathVariable Long id, @RequestBody TaskDTO user){
+        if(taskService.findById(id) != null) {
+            return ResponseEntity.ok(taskService.updateTask(user, id));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        taskService.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        if(taskService.findById(id) != null) {
+            taskService.deleteById(id);
+            return ResponseEntity.ok().body("User successfully deleted: " + id);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

@@ -38,6 +38,7 @@ public class UserService {
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }
+
     public UserDTO updateUser(UserDTO userDTO, Long id){
         Optional<UserModel> existingUser = userRepository.findById(id);
         if(existingUser.isPresent()){

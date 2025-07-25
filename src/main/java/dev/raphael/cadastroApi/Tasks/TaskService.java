@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -22,14 +23,29 @@ public class TaskService {
         return taskMapper.map(tasksModel);
     }
 
-    public List<TasksModel> findAll(){
-        return taskRepository.findAll();
+    public List<TaskDTO> findAll(){
+        List<TasksModel> tasks = taskRepository.findAll();
+        return  tasks.stream()
+                .map(taskMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public TasksModel findById(Long id){
+    public TaskDTO findById(Long id){
         Optional<TasksModel> tasks= taskRepository.findById(id);
-        return tasks.orElse(null);
+        return tasks.map(taskMapper::map).orElse(null);
     }
+
+    public TaskDTO updateTask(TaskDTO taskDTO, Long id){
+        Optional<TasksModel> existingTask = taskRepository.findById(id);
+        if (existingTask.isPresent()){
+            TasksModel updatedTask = taskMapper.map(taskDTO);
+            updatedTask.setId(id);
+            taskRepository.save(updatedTask);
+            return taskMapper.map(updatedTask);
+        }
+        return null;
+    }
+
     public void deleteById(Long id){
         taskRepository.deleteById(id);
     }
